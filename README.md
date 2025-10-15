@@ -1,25 +1,80 @@
-# ICS 372 Object Oriented Design and Implementation Group Project
-### Contributors: Jordan Curtis, Majid Farah, Tommy Fenske, Ruben Vallejo, Kheder Yusuf
+# STEM Learning Guide Platform
 
-## Project Instructions:
-Your assignment is to design and build a tracking system for a restaurant that receives online orders
-through a 3rd party (FoodHub). Restaurant staff will need to be able to add orders that arrive, start orders
-so they can be prepared, and close orders which have been completed. It will be evaluated against the
-following requirements:
-1. The software shall read a file that is in JSON format containing various order information.
-2. The software shall support 2 different types of orders in the input file: to go order and
-pickup order.
-3. The software shall read and store the order type, order time, food items, quantity, and item
-price of each order and associate it with the specified order ID.
-4. The software shall support the following commands for each order: start incoming order,
-display incoming order, and complete incoming order.
-5. The software shall only allow starting an incoming order if that order has not been started
-or completed.
-6. The software shall keep records for an order that has been completed.
-7. The software shall be able to export all orders into a single JSON file.
-8. The software shall show the list of all uncompleted orders including the price total for the
-order.
-Usage of the Java standard libraries or other libraries as part of your program is expected. Make sure
-you include external jar files with your source when you submit it. Documentation of the software is
-expected as well. Be sure to include a class diagram of the program and a sequence diagram of the add
-incoming order operation.
+A full-stack platform that helps students discover STEM subjects, generate personalized learning paths, and track their progress. The system is composed of a Spring Boot backend, a FastAPI AI microservice, a simple frontend, and a PostgreSQL database.
+
+## Project Structure
+
+```
+STEM-Guide/
+├── backend-java/        # Spring Boot API
+├── ai-python/           # FastAPI recommendation microservice
+├── frontend/            # HTML/CSS/JS interface
+├── database/            # PostgreSQL setup notes
+└── README.md
+```
+
+## Services
+
+### Java Backend (Spring Boot)
+
+* Exposes REST APIs for subjects, learning resources, user profiles, and progress tracking.
+* Integrates with the AI microservice to generate personalized learning paths.
+* Seeds sample STEM subjects and resources on startup.
+* Configuration located at `backend-java/src/main/resources/application.yml`.
+
+Run locally:
+
+```bash
+cd backend-java
+./gradlew bootRun
+```
+
+Run the backend test suite (uses an in-memory H2 database and stubs the AI service):
+
+```bash
+cd backend-java
+./gradlew test
+```
+
+### AI Recommendation Service (FastAPI)
+
+* Accepts subject, level, and goals to generate curated resource recommendations and milestones.
+
+```bash
+cd ai-python
+pip install -r requirements.txt
+uvicorn app:app --reload --port 8000
+```
+
+### Frontend
+
+Simple static HTML/CSS/JS client that consumes the backend APIs. Serve it with any static file server:
+
+```bash
+cd frontend
+python -m http.server 3000
+```
+
+Update the `backendBaseUrl` in `frontend/main.js` if hosting the backend elsewhere.
+
+### Database
+
+Create a PostgreSQL database using the instructions in `database/README.md`. The backend expects the database to be accessible at `jdbc:postgresql://localhost:5432/stem_guide` with credentials `stem_guide/stem_guide`.
+
+## API Overview
+
+* `GET /api/v1/subjects` – list STEM subjects
+* `POST /api/v1/subjects` – create subject
+* `GET /api/v1/resources/subject/{subjectId}` – list resources for a subject
+* `POST /api/v1/resources` – create a new resource
+* `POST /api/v1/recommendations` – request personalized learning path from AI service
+* `GET /api/v1/progress/user/{userId}` – list learning progress for a user
+* `POST /api/v1/progress` – create progress entry
+
+Use the endpoints to build richer clients or integrate with other systems.
+
+## Next Steps
+
+* Add authentication (e.g., JWT) and fine-grained authorization.
+* Replace seed data with managed migrations and admin tooling.
+* Deploy the services with container orchestration (Docker Compose, Kubernetes).

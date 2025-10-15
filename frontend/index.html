@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>STEM Learning Guide</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>STEM Learning Guide</h1>
+    <p>Discover curated study plans and track your STEM learning journey.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Subjects</h2>
+      <ul id="subjects"></ul>
+    </section>
+
+    <section class="panel">
+      <h2>Recommended Learning Path</h2>
+      <form id="recommendation-form">
+        <label>
+          Subject
+          <select id="subject-select"></select>
+        </label>
+        <label>
+          Level
+          <select id="level-select">
+            <option value="BEGINNER">Beginner</option>
+            <option value="INTERMEDIATE">Intermediate</option>
+            <option value="ADVANCED">Advanced</option>
+          </select>
+        </label>
+        <label>
+          Goals (comma separated)
+          <input type="text" id="goals-input" placeholder="e.g. linear algebra, neural networks" />
+        </label>
+        <button type="submit">Generate Path</button>
+      </form>
+      <div id="recommendation"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Resources</h2>
+      <div id="resources"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Connect the backend (Spring Boot) and AI service (FastAPI) before using this UI.</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
